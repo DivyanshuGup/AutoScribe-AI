@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutoScribe AI — Smart Lecture Summarizer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+  if(typeof pdfjsLib !== 'undefined') pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+</script>
+</head>
+<body>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">⚡ AutoScribe AI</div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#app">Summarizer</a></li>
+    <li><a href="#chatbot">Chatbot</a></li>
+    <li><a href="#how">How it Works</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-badge"><span></span> AI-Powered Study Tool</div>
+  <h1 class="hero-title">
+    Your Lectures,<br>
+    <span class="grad">Instantly Summarized</span>
+  </h1>
+  <p class="hero-sub">
+    Upload audio, video, PDFs or paste text — get clean notes, flashcards, mind maps, and an AI chatbot ready to explain anything.
+  </p>
+  <div class="hero-btns">
+    <button class="btn-primary" onclick="document.getElementById('app').scrollIntoView({behavior:'smooth'})">
+      🚀 Try It Now
+    </button>
+    <button class="btn-outline" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">
+      See How It Works
+    </button>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">10x</div><div class="stat-label">Faster Notes</div></div>
+    <div class="stat"><div class="stat-num">6+</div><div class="stat-label">Output Formats</div></div>
+    <div class="stat"><div class="stat-num">∞</div><div class="stat-label">AI Explanations</div></div>
+  </div>
+</section>
+
+<!-- ─── FEATURES ─── -->
+<section id="features" class="section-pad">
+  <div class="container">
+    <div class="section-label">What It Does</div>
+    <h2 class="section-title">Everything a Student Needs</h2>
+    <p class="section-desc">From raw lecture content to exam-ready study material — powered by Groq AI.</p>
+
+    <div class="features-grid">
+      <div class="feat-card">
+        <div class="feat-icon purple">📝</div>
+        <h3>Auto Transcription</h3>
+        <p>Paste your lecture text or transcript and the AI converts it into structured, readable notes instantly.</p>
+        <span class="feat-badge new">Core Feature</span>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon cyan">✨</div>
+        <h3>Key Concept Highlighting</h3>
+        <p>AI identifies the most important concepts, definitions, and ideas — no more manual highlighting.</p>
+        <span class="feat-badge new">Core Feature</span>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon gold">🃏</div>
+        <h3>Flashcard Generation</h3>
+        <p>Automatically creates Q&A flashcards from your lecture content, perfect for spaced repetition revision.</p>
+        <span class="feat-badge new">Core Feature</span>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon green">🗺️</div>
+        <h3>Mind Maps</h3>
+        <p>Visualize how topics connect with auto-generated mind maps that show the big picture at a glance.</p>
+        <span class="feat-badge new">Core Feature</span>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon purple">🧠</div>
+        <h3>AI Chatbot</h3>
+        <p>Ask the AI to explain any concept in simple language. Like having a tutor available 24/7.</p>
+        <span class="feat-badge new">Core Feature</span>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon cyan">🌐</div>
+        <h3>Multi-Language Output</h3>
+        <p>Get your notes in Hindi, English, or any language — perfect for regional language learners.</p>
+        <span class="feat-badge pro">Advanced</span>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon gold">❓</div>
+        <h3>Quiz Generation</h3>
+        <p>Auto-generate practice tests from your lecture content to test yourself before exams.</p>
+        <span class="feat-badge pro">Advanced</span>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon green">📊</div>
+        <h3>Clean Summary</h3>
+        <p>Get a concise, well-structured summary of any long lecture in a fraction of the time.</p>
+        <span class="feat-badge new">Core Feature</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── MAIN APP ─── -->
+<section id="app" class="section-pad">
+  <div class="container">
+    <div class="section-label">Try It Now</div>
+    <h2 class="section-title">Smart Lecture Summarizer</h2>
+    <p class="section-desc">Paste your lecture text below and choose what you want to generate.</p>
+
+    <div class="app-wrapper">
+      <!-- LEFT: Controls -->
+      <div class="app-left">
+
+        <!-- Text Input -->
+        <div class="panel-card">
+          <div class="panel-title">Lecture Content</div>
+          <textarea class="text-input-area" id="lectureText" placeholder="Paste your lecture notes, transcript, or any study material here...
+
+Example: 'Today we discussed Newton's Laws of Motion. The first law states that an object at rest stays at rest unless acted upon by an external force...'"></textarea>
+          <div style="margin-top:0.75rem;">
+            <div class="panel-title" style="font-size:0.75rem; margin-bottom:0.5rem;">Or upload a text/PDF file</div>
+            <div class="upload-area" id="uploadArea">
+              <input type="file" id="fileInput" accept=".txt,.md,.pdf,.PDF" onchange="handleFile(event)"/>
+              <div class="upload-icon">📂</div>
+              <p>Drag & drop or <strong>browse file</strong></p>
+              <div class="file-types">
+                <span class="file-type-tag">.txt</span>
+                <span class="file-type-tag">.md</span>
+                <span class="file-type-tag">.pdf</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Output Options -->
+        <div class="panel-card">
+          <div class="panel-title">Generate</div>
+          <div class="options-grid">
+            <label class="option-chip">
+              <input type="checkbox" name="output" value="summary" checked>
+              <span class="option-dot"></span> 📄 Summary
+            </label>
+            <label class="option-chip">
+              <input type="checkbox" name="output" value="highlights">
+              <span class="option-dot"></span> ✨ Highlights
+            </label>
+            <label class="option-chip">
+              <input type="checkbox" name="output" value="flashcards">
+              <span class="option-dot"></span> 🃏 Flashcards
+            </label>
+            <label class="option-chip">
+              <input type="checkbox" name="output" value="mindmap">
+              <span class="option-dot"></span> 🗺️ Mind Map
+            </label>
+            <label class="option-chip">
+              <input type="checkbox" name="output" value="quiz">
+              <span class="option-dot"></span> ❓ Quiz
+            </label>
+            <label class="option-chip">
+              <input type="checkbox" name="output" value="notes">
+              <span class="option-dot"></span> 📝 Clean Notes
+            </label>
+          </div>
+        </div>
+
+        <!-- Language -->
+        <div class="panel-card">
+          <div class="panel-title">Output Language</div>
+          <select class="lang-select" id="langSelect">
+            <option value="English">🇬🇧 English</option>
+            <option value="Hindi">🇮🇳 Hindi (हिंदी)</option>
+            <option value="Hinglish">🇮🇳 Hinglish (Hindi+English)</option>
+            <option value="Bengali">🇮🇳 Bengali (বাংলা)</option>
+            <option value="Tamil">🇮🇳 Tamil (தமிழ்)</option>
+            <option value="Telugu">🇮🇳 Telugu (తెలుగు)</option>
+            <option value="Spanish">🇪🇸 Spanish</option>
+            <option value="French">🇫🇷 French</option>
+            <option value="German">🇩🇪 German</option>
+            <option value="Japanese">🇯🇵 Japanese</option>
+          </select>
+        </div>
+
+        <!-- Generate Button -->
+        <button class="btn-primary" id="generateBtn" onclick="generateContent()" style="width:100%; padding:1rem; font-size:1rem;">
+          ⚡ Generate Now
+        </button>
+
+      </div><!-- /app-left -->
+
+      <!-- RIGHT: Output -->
+      <div class="app-right">
+        <div class="output-tabs" id="outputTabs">
+          <button class="tab-btn active" data-tab="summary" onclick="switchTab(this)">📄 Summary</button>
+          <button class="tab-btn" data-tab="highlights" onclick="switchTab(this)">✨ Highlights</button>
+          <button class="tab-btn" data-tab="flashcards" onclick="switchTab(this)">🃏 Flashcards</button>
+          <button class="tab-btn" data-tab="mindmap" onclick="switchTab(this)">🗺️ Mind Map</button>
+          <button class="tab-btn" data-tab="quiz" onclick="switchTab(this)">❓ Quiz</button>
+          <button class="tab-btn" data-tab="notes" onclick="switchTab(this)">📝 Notes</button>
+        </div>
+        <div class="output-body" id="outputBody">
+          <!-- Empty state -->
+          <div class="empty-state" id="emptyState">
+            <div class="empty-icon">🎓</div>
+            <h3>Ready to Summarize</h3>
+            <p>Paste your lecture text on the left and hit Generate Now</p>
+          </div>
+          <!-- Loading -->
+          <div class="loading-state" id="loadingState">
+            <div class="loader-ring"></div>
+            <div class="loading-steps">
+              <div class="load-step" id="ls1">⏳ Reading lecture content...</div>
+              <div class="load-step" id="ls2">🧠 Analyzing with AI...</div>
+              <div class="load-step" id="ls3">✍️ Generating outputs...</div>
+              <div class="load-step" id="ls4">✅ Almost ready...</div>
+            </div>
+          </div>
+          <!-- Output content -->
+          <div class="output-content" id="outputContent"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CHATBOT ─── -->
+<section id="chatbot" class="section-pad">
+  <div class="container">
+    <div class="section-label">AI Tutor</div>
+    <h2 class="section-title">Ask Anything, Anytime</h2>
+    <p class="section-desc">Your personal AI study assistant — get instant explanations, real-world examples, and concept breakdowns whenever you need them.</p>
+
+    <div class="chat-wrapper">
+      <div class="chat-header">
+        <div class="chat-avatar">🤖</div>
+        <div class="chat-info">
+          <h3>AutoScribe AI Assistant</h3>
+          <p>● Online — Ready to help</p>
+        </div>
+        <div class="chat-status">
+          <span class="status-dot"></span>
+          <span style="font-size:0.78rem; color:var(--text3)">Powered by Groq · Llama 3.3</span>
+        </div>
+      </div>
+
+      <div class="chat-messages" id="chatMessages">
+        <div class="msg ai">
+          <div class="msg-avatar">🤖</div>
+          <div class="msg-bubble">
+            Hello! 👋 I'm AutoScribe AI — your intelligent study assistant. Whether you need a concept explained, a real-world example, or want to test your knowledge with a quick quiz, I'm here to help. Feel free to ask anything about your lecture content!
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-suggestions" id="chatSuggestions">
+        <span class="sug-chip" onclick="useSuggestion(this)">Explain this in simple terms</span>
+        <span class="sug-chip" onclick="useSuggestion(this)">Give me a real-world example</span>
+        <span class="sug-chip" onclick="useSuggestion(this)">What are the key takeaways?</span>
+        <span class="sug-chip" onclick="useSuggestion(this)">Generate a practice quiz</span>
+        <span class="sug-chip" onclick="useSuggestion(this)">Summarize in bullet points</span>
+      </div>
+
+      <div class="chat-input-row">
+        <textarea id="chatInput" placeholder="Ask anything about your lecture content..." rows="1"
+          onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat()}"
+          oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,120)+'px'"></textarea>
+        <button id="sendBtn" onclick="sendChat()">➤</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── HOW IT WORKS ─── -->
+<section id="how" class="section-pad">
+  <div class="container">
+    <div class="section-label">Process</div>
+    <h2 class="section-title">How It Works</h2>
+    <p class="section-desc">Four simple steps from raw lecture to exam-ready material.</p>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <h3>Upload Content</h3>
+        <p>Paste lecture text, upload a .txt file, or type directly into the input box.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <h3>Choose Output</h3>
+        <p>Select what you need — summary, highlights, flashcards, quiz, or mind map.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <h3>AI Processes</h3>
+        <p>Groq AI reads, understands, and generates high-quality study material in seconds.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">04</div>
+        <h3>Study Smarter</h3>
+        <p>Use the generated content to revise, practice, and ace your exams with confidence.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SKILLS ─── -->
+<section id="skills" class="section-pad">
+  <div class="container">
+    <div class="section-label">Tech Stack</div>
+    <h2 class="section-title">Resume-Worthy Skills</h2>
+    <p class="section-desc">Building this project demonstrates mastery of in-demand AI & web technologies.</p>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <h3>🤖 AI / ML</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">NLP</span>
+          <span class="skill-tag">LLMs</span>
+          <span class="skill-tag">Prompt Engineering</span>
+          <span class="skill-tag">Text Summarization</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h3>🔌 APIs</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">Groq API</span><span class="skill-tag">Llama 3.3</span>
+          <span class="skill-tag">REST APIs</span>
+          <span class="skill-tag">Async/Await</span>
+          <span class="skill-tag">Streaming</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h3>💻 Frontend</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">HTML5</span>
+          <span class="skill-tag">CSS3</span>
+          <span class="skill-tag">Vanilla JS</span>
+          <span class="skill-tag">Responsive Design</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h3>🎓 Ed-Tech</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">Flashcard Systems</span>
+          <span class="skill-tag">Quiz Generation</span>
+          <span class="skill-tag">Mind Mapping</span>
+          <span class="skill-tag">Multi-language</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <p>© 2026 <strong style="color:var(--accent2)">Divyanshu Gupta</strong>. All Rights Reserved. &nbsp;·&nbsp; AutoScribe AI — Smart Lecture Summarizer &nbsp;·&nbsp; Powered by <strong>Groq AI · Llama 3.3</strong></p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
