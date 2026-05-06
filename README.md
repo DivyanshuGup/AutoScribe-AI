@@ -209,7 +209,7 @@ Pull requests are welcome! For major changes, please open an issue first to disc
 
 <div align="center">
 
-Made with ❤️ by **Divyanshu Gupta**
+Made by **Divyanshu Gupta**
 
 ⭐ If you found this useful, please star the repo!
 
