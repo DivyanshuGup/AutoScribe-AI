@@ -5,11 +5,10 @@
 ![AutoScribe AI Banner](https://img.shields.io/badge/AutoScribe-AI%20Powered-blueviolet?style=for-the-badge&logo=lightning&logoColor=white)
 ![Groq](https://img.shields.io/badge/Groq-Llama%203.3%2070B-orange?style=for-the-badge)
 ![Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)
-![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
 **Transform raw lecture content into exam-ready study material — in seconds.**
 
-[🚀 Live Demo](#) &nbsp;·&nbsp; [📖 Features](#-features) &nbsp;·&nbsp; [⚙️ Setup](#%EF%B8%8F-setup) &nbsp;·&nbsp; [🛠️ Tech Stack](#%EF%B8%8F-tech-stack)
+[🚀 Live Demo](https://auto-scribe-ai.vercel.app/) &nbsp;·&nbsp; [📖 Features](#-features) &nbsp;·&nbsp; [⚙️ Setup](#%EF%B8%8F-setup) &nbsp;·&nbsp; [🛠️ Tech Stack](#%EF%B8%8F-tech-stack)
 
 </div>
 
@@ -179,11 +178,20 @@ English · Hindi · Hinglish · Bengali · Tamil · Telugu · Spanish · French 
 
 ## 📸 Screenshots
 
-> _Add screenshots here after deployment_
+**Hero — Landing Page**
+![Hero](./screenshots/hero.png)
 
-| Landing Page | Summarizer | Flashcards | Chatbot |
-|---|---|---|---|
-| ![](./screenshots/hero.png) | ![](./screenshots/summarizer.png) | ![](./screenshots/flashcards.png) | ![](./screenshots/chatbot.png) |
+**Features Section**
+![Features](./screenshots/features.png)
+
+**Smart Lecture Summarizer**
+![Summarizer](./screenshots/summarizer.png)
+
+**AI Chatbot**
+![Chatbot](./screenshots/chatbot.png)
+
+**How It Works**
+![How it Works](./screenshots/how.png)
 
 ---
 
@@ -196,12 +204,6 @@ Pull requests are welcome! For major changes, please open an issue first to disc
 3. Commit your changes (`git commit -m 'Add: your feature'`)
 4. Push to the branch (`git push origin feature/your-feature`)
 5. Open a Pull Request
-
----
-
-## 📄 License
-
-This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
 
 ---
 
